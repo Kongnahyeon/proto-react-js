@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <span>Total clicks: 0</span>
+    <button id="btn">Click me</button>
+    <script>
+        let counter = 0; //btn을 클릭할때 마다 counter을 가져오기위해
+        const button = document.getElementById('btn');
+        const span = document.querySelector('span');
+
+        ///button을 클릭했을때 일어나는 동작
+        function handleClick() {
+            counter = counter + 1; //새로고침을 해도 data가 변하지않음
+            //console.log('i have been clicked'); -> 클릭할때마다 console에 문자가 찍힘
+
+            //span.innerText = counter; -> counter의 숫자는 변동되나, 기존의 텍스트가 사라짐으로 아래코드로 작성
+            //현재 화면에서 내가 클릭한 숫자를 불러옴
+            span.innerText = `Total clicks: ${counter}`
+        }
+        button.addEventListener('click', handleClick);
+    </script>
+</body>
+
+</html>

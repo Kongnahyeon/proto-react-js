@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<body>
+    <div id="root"></div>
+</body>
+<!-- 
+    react를 사용하기 위해서는 2가지의 javascript를 import 해야함
+    1) react : https://unpkg.com/react@17.0.2/umd/react.production.min.js -> 어플리케이션을 interactive하게 만들어주는 library
+    2) react-dom : https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js -> react의 element를 html에 둘 수 있게 해줌
+-->
+<!-- console창에 React를 작성했을때 연결이 되고 있는지 확인이 가능함 -->
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script>
+    //react로 element를 만드는 방법
+    const root = document.getElementById('root');
+
+    //createElement('element' , 해당 element의 property, 해당 element의 content)
+    //property에 들어갈 수 있는 것 => id / class / style
+    /* 
+        const span = React.createElement(
+        'span', (( : element ))
+        { id : 'sexy-span', style : {color : 'blue'}}, (( : property ))
+        )
+        "Hello, i'm a span" 
+        null,
+        "Hello, i'm a span" (( : content))
+        );
+    */
+
+    //render() => react element를 가지고 html로 만들어 배치하는 것 / 사용자에게 보여주는 것
+    //ReactDOM.render(생성할 요소, 들어가야하는 곳);
+
+    // ReactDOM.render(span, root);
+    // 1. 보통 body에 <div id="root"></div>를 생성시키기도 함.
+    // 2. body안에 있는 root를 가져오기 위해 "const = #$@#$"를 이용해 변수로 가져옴
+    // 3. render(span, root) => root안에 span을 생성시키는 것
+
+
+    /* 
+        const nahyeon = React.createElement(
+        'div',
+        { class : 'nahyeon', style: {backgroundColor : 'yellow'}},
+        'Hello, my name is nahyeon'
+        );
+        ReactDOM.render(nahyeon, root); 
+    */
+
+
+    const h2 = React.createElement('h2', null, "Hello, i'm a h2");
+    // button을 생성
+    const btn = React.createElement('button', {
+        //property에 event를 등록할 수 있음
+        
+    }, "Click me");
+
+    //div안에 span과 btn을 생성시키기위해
+    const container = React.createElement('div', null, [h2, btn]);
+    //2가지를 다 넣고 싶을 경우 => [] 넣고싶은 element를 차례대로 넣기
+
+    ReactDOM.render(container, root);
+</script>
+
+</html>
