@@ -48,14 +48,22 @@
     */
 
 
-    const h2 = React.createElement('h2', null, "Hello, i'm a h2");
+    const h2 = React.createElement('h2', {
+        id : 'title', //<h2 id="title"></h2>
+        //on + event = event listener인 것을 react에서는 알아서 인식함
+        onMouseEnter: () => console.log('mouse enter'), //mouseEnter시 일어나는 event
+    }, "Hello, i'm a h2");
     // button을 생성
     const btn = React.createElement('button', {
-        //property에 event를 등록할 수 있음
-        
+        //property에 event listener을 적용할 수 있음
+        onClick: () => console.log('im clicked'), //btn click시 일어나는 event
+        style : {
+            backgroundColor : 'skyBlue',
+            border: '1px solid blue',
+        },
     }, "Click me");
 
-    //div안에 span과 btn을 생성시키기위해
+    //div안에 h2와 btn을 생성시키기위해
     const container = React.createElement('div', null, [h2, btn]);
     //2가지를 다 넣고 싶을 경우 => [] 넣고싶은 element를 차례대로 넣기
 
