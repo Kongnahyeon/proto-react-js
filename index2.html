@@ -20,12 +20,21 @@
     2) cdn만 붙여주면 오류가 생김(적용 x) -> 그밑에 <script type="text/babel">을 적어줘야함 
 
     */
-    const Title = ( <
-        h3 id = "title"
+   /* 
+     const Title = () => ( <h3
+        id = "title"
         onMouseEnter = {
             () => console.log('mouse enter')
         } > Hello I 'm a title</h3>
-    );
+    ); 
+    */
+
+    //위에 내용을 function을 이용해 작성한다면
+    function Title() {
+        return(
+            <h3 id = "title" onMouseEnter = { () => console.log('mouse enter') } > Hello I 'm a title</h3>
+        );
+    }
 
     //위에 코드를 앞에 배웠던 내용처럼 풀어쓰면
     /**
@@ -38,7 +47,7 @@
      */
 
 
-    const Button = ( <button style = {
+    const Button = () => ( <button style = {
             {
                 backgroundColor: 'blue',
             }
@@ -48,8 +57,22 @@
         } >
         Click me </button>
     );
-    const container = React.createElement('div', null, [Title, Button]);
-    ReactDOM.render(container, root);
+
+    const Container = () => (<div>
+        <Title />
+        <Button />
+    </div>);
+    // const Container = <div>Title Button</div>;
+    // -> 안에 있는 Title 과 Button을 변수로 사용하려면 얘네들을 함수로 만들어줘야함, 그렇지 않으면 그냥 단지 text가 됨
+    // 변수로 사용해서 하는 방법 <변수 /> 이런식으로 넣어줘야함
+    //중요! 컴포넌트의 앞글자는 무조건 '대문자', 소문자로 작성을 하게 된다면 react/JSX에서 html button (button -> Button)이라고 생각함
+
+
+    //const container = React.createElement('div', null, [Title, Button]);
+
+
+    ReactDOM.render(<Container />, root);
+    //ReactDOM.render(Container, root);
     
 
     //위에 코드를 앞에 배웠던 내용처럼 풀어쓰면
@@ -58,6 +81,7 @@
             backgroundColor :'green',
         }}
         onClick={() => console.log('im clicked')}>Click me</button>); */
+
 
 </script>
 
