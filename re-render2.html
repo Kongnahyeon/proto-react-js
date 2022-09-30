@@ -1,0 +1,48 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>modifier가 필요한 이유</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+<script src="https://unpkg.com/react@17.0.2/umd/react.production.min.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    const root = document.getElementById('root');
+    function App(){
+        const [counter, setCounter] = React.useState(0);
+        //React.useState 함수는 counter 같은 데이터를 숫자형 데이터로 건내줌
+        //그 데이터 값을 변경해줄 함수도 같이 줌 => modifier
+        //컴포넌트도 자동으로 re-rendering이 됨
+
+        //보통 const [counter(아무이름), modifier(set뒤에 데이터 이름을 붙여줌 : setCounter)]
+
+        const onClick = () => {
+            //counter = counter + 1;
+            //console.log(counter);
+            setCounter(counter + 1);
+            /*
+            counter = 787978
+            ReactDOM.render(<App />, root);
+            -> 위 모든 내용들이 modifier 함수 내에서 일어남
+            */
+        };
+      
+        return(
+            <div>
+                <h3>Total clicks: {counter}</h3>
+                <button onClick={onClick}>Click me</button>
+            </div>
+        );
+    }
+    ReactDOM.render(<App />, root);
+
+</script>
+</html>
