@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>state값 변경하는 것 (복습1)</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    function App(){
+        const [minutes, setMinutes] = React.useState(0);
+        const onChange = (event) => {
+            setMinutes(event.target.value);
+            //input의 value 즉, 해당 ()의 데이터가 업데이트 된다는 것
+        }
+        const reset = () => setMinutes(0);
+
+        return(
+            <div>
+                <h1>Super Converter</h1>
+                
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input 
+                        value={minutes} //input의 value를 state로 연결
+                        id="minutes"
+                        placeholder="Minutes"
+                        type="number"
+                        onChange={onChange} //데이터를 업데이트 시켜주는 역할
+                    />
+                </div>
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input
+                        //value={minutes / 60}
+                        value={Math.round(minutes / 60)}
+                        id="hours"
+                        placeholder="Hours"
+                        type="number"
+                        disabled
+                    />
+                </div>
+                <button onClick={reset}>Reset</button>
+            </div>
+        );
+    }
+    const root = document.getElementById('root');
+    ReactDOM.render(<App />, root);
+
+
+    /*
+        input의 value가 state값이고, 여기의 state의 default값이 0 이기 때문에,
+        input의 onChange를 넣지 않을시, 해당 input에 다른 값을 적용시키려고 해도 변화하지않고 0으로만 적용됨
+
+        ** value와 onChange 두가지가 다 필요한 이유
+        1. event를 만들어주는 것 - onChange
+        2. event가 발생했을 때의, 값을 업데이트해주고 ui에 보여주는 것 - value
+
+    */
+
+</script>
+
+</html>
