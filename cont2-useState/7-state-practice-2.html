@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>state값 변경하는 것 - flip function</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    function App(){
+        const [amount, setAmount] = React.useState(0);
+        const [flipped, setFlipped] = React.useState(false);
+        //flipped는 단순히 true or false인 변수
+        const onChange = (event) => {
+            setAmount(event.target.value);
+        }
+        const reset = () => setAmount(0);
+        // const onFlip = () => setFlipped(!flipped); -> 좋지 못한 방법
+        // true -> false, false -> true : 반대로 변경
+        const onFlip = () => {
+            reset(); //reset();을 추가 시킨 이유 = flip버튼을 클릭했을때 초기값으로 리셋시키기위해
+            setFlipped((current) => !current)
+        };
+        //onFlip 함수는 현재 값을 받아서 그 반대의 값을 실행시키는 것
+
+        return(
+            <div>
+                <h1>Super Converter</h1>
+                
+                <div>
+                    <label htmlFor="minutes">Minutes</label>
+                    <input 
+                        value={flipped ? amount * 60 : amount} 
+                        id="minutes"
+                        placeholder="Minutes"
+                        type="number"
+                        onChange={onChange}
+                        //disabled={flipped === true}
+                        disabled={flipped}
+                    />
+                </div>
+                <div>
+                    <label htmlFor="hours">Hours</label>
+                    <input
+                        value={flipped ? amount : Math.round(amount / 60)}
+                        id="hours"
+                        placeholder="Hours"
+                        type="number"
+                        //disabled={flipped === false}
+                        disabled={!flipped}
+                        onChange={onChange}
+                    />
+                </div>
+                <button onClick={reset}>Reset</button>
+                <button onClick={onFlip}>Flip</button>
+            </div>
+        );
+    }
+    const root = document.getElementById('root');
+    ReactDOM.render(<App />, root);
+
+
+    /*
+        * 단위 변환을 뒤집어보는 함수 (flip function) 만들기
+
+        * const onFlip = () => setFlipped(!flipped);
+          : if flipped가 true라면, 부정명제(!flipped)는 반대로 false가 됨
+
+
+        * value={flipped ? minutes : Math.round(minutes / 60)}
+          : 삼항연산자를 이용해 상황에 따른 조건문을 걸 수 있음
+          : flipped ? minutes -> if flipped 상태인경우 state에 있는 값을 그대로 실행
+
+        
+        ------ flip -----
+        * const onFlip() = () => setFlipped(!flipped);
+        : flipped가 true일 경우 부정명제인 !flipped는 false가 됨
+        : 반대로, flipped가 false일 경우 부정명제인 !flipped는 true가 됨
+
+        * state값으로 input을 enabled or disabled로 결정할 수 있음
+
+        * 디폴트 값이 false라고 가정했을때, Hours는 disabled 되어야하며,
+        disabled = {flipped === false}를 이용해
+        flipped가 false일 경우, disabled는 true가 되도록 만들어 줌
+
+        Minuets는 반대로 disabled={flipped === true}로 만들어 줌
+
+        * disabled = {flipped === true} 보다 간결하게 disabled = {!flipped}
+        or disabled = {flipped === false} 보다 간결하게 disabled = {flipped}
+        로 작성하는게 좀더 좋은 방향 (해당 부분은 flipped의 default 값이 false일 경우)
+
+        * 시간에서 분으로 컨버터 시키는 방법
+        - 삼항연산자를 사용 (ternary operator)
+          flipped ? amount : amount / 60
+          : 만약 flipped(false)인 상태면 state에 있는 값을 그대로 보여줘라 (내가 작성한 값)
+            반대로, flipped(true)인 상태면 'amount : Math.round(amount / 60)' 60을 나눈 값으로 보여줘라 (= 변환된 값)
+    */
+
+</script>
+
+</html>
