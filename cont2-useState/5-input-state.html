@@ -1,0 +1,80 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>unit conversion (단위 변환) 앱 만들기</title>
+</head>
+<body>
+    <div id="root"></div>
+</body>
+
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    function App(){
+        const [minutes, setMinutes] = React.useState();
+        /* [] 배열 안
+        first item = value
+        second item = value를 수정, component를 새로고침 할때 사용하는 함수
+        */
+
+        const onChange = (event) => {
+            setMinutes(event.target.value); //변화되는 input의 value를 가져오게 하는 것
+        }
+
+        return(
+            <div>
+                <h1 className="hi">Super Converter</h1>
+                
+                <label htmlFor="minutes">Minutes</label>
+                <input 
+                    value={minutes} //state의 value와 같아지는 것
+                    id="minutes"
+                    placeholder="Minutes"
+                    type="number"
+                    onChange={onChange} //input에 변화가생기면 onChange함수를 실행
+                    />
+                    <h4>You want to convert {minutes}</h4>
+                <label htmlFor="hours">Hours</label>
+                <input id="hours" placeholder="Hours" type="number" />
+            </div>
+        );
+    }
+    const root = document.getElementById('root');
+    ReactDOM.render(<App />, root);
+
+
+    /*
+
+        * production = 배포모드 / development = 개발모드
+
+        ** production.min.js -> development.js
+        : for과 class는 javascript 용어이기에 사용할 수 없음
+
+        ** jsx는 html과 비슷하지만 다른점을 가지고 있음 그래서
+        : for을 사용시 -> htmlFor
+        : class를 사용시 -> className
+
+        ** react.js에서는 uncontrolled라고 알려져 있음. 즉, input의 value는 우리가 통제할 수 없다는 말
+        -> controlled component:input이 있다면 value, onChange 속성을 이용해 상태를 변경하면 됨
+
+        ** const [minutes, ] = React.useState();
+        - () 안 default값에는 공백이들어가든, 문자가 들어가든, 숫자가 들어가든 상관없음
+        - useState는 array를 제공 -> 첫번째 값 = 현재의 값, 두번째 값 = 첫번째 값을 수정시켜주는 값(modifier 함수)
+
+        ** react.js는 javascript를 대부분 사용할 수 있음
+         const onChange = (event) => {
+            console.log(event);
+        }
+        이렇게 사용했을시 console로 확인해보면 'SyntheticBaseEvent'라고 가짜이벤트를 실행시키는데
+        지금 하려는건, input의 값을 받아 value를 변경하려고 하기에
+        event > targe > value를 찾아보면 내가 찾으려고 하는 value event를 발생시킬 수 있음
+
+    */
+
+</script>
+</html>
