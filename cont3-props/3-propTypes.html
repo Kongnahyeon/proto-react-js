@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>prop types</title>
+</head>
+
+<body>
+    <div id="root"></div>
+</body>
+
+<script src="https://unpkg.com/react@17.0.2/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@17.0.2/umd/react-dom.development.js"></script>
+<!-- react.js에서 prop-type을 알고자 할 경우 설치 -->
+<script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script type="text/babel">
+    // javascript로 정의되지 않은 곳에 기본값을 줄 수 있음 : fontSize = 20
+    function Btn({ title, fontSize = 20 }){
+        return (
+                <button 
+                style={{
+                    backgroundColor: "#FF8787",
+                    color:"white",
+                    padding:"10px 20px",
+                    border: 0,
+                    borderRadius: 10,
+                    //fontSize: fontSize, 이름을 같게 설정했기 때문에 아래와 같이 적용해도 됨
+                    fontSize,
+                }}
+            >
+            {title}
+            </button>
+        )
+            
+    }
+    //우리가 설정한 propType을 미리 react에게 알려주는 것
+    //무조건 re-render될 것을 안다면 .isRequired로 prop를 작성했는지 안했는지 알려주기도 함
+    Btn.propTypes = {
+        title: PropTypes.string.isRequired,
+        fontSize: PropTypes.number,
+    }
+    function App(){
+        return (
+            <div>
+                <Btn title="Save Changes" fontSize={18} />
+                <Btn title="Continue" />
+            </div>
+        );
+    }
+    const root = document.getElementById('root');
+    ReactDOM.render(<App />, root);
+
+
+    /*
+       
+        react.js에서 어디에 오류가 있다는 것을 찾아주는건 아니지만,
+        우리가 어떤 prop type을 사용할 것이라는 것을 설명해주는 것
+        => 내가 prop에 다른 type을 넣었을시 콘솔에 오류로 잘못되었다는 것을 알려줌
+           ex) 만약 txt: PropTypes.number로 해줬는데 txt={"나는나찌"} 이렇게 string으로 작성했을시
+           console창에 < prop `txt` of type `number` > 이런식으로 나타남
+
+        
+        * propType을 설치하고 나면
+          우리가 설정한 propType을 미리 react에게 알려줘야 console창에서 오류를 확인 할 수 있음
+
+          Btn.propTypes = {
+            title: PropTypes.string.isRequired,
+            fontSize: PropTypes.number,
+          }
+
+        
+        * 필수적으로 re-render이 되어야하는 부분에는 ".isRequired"를 붙여주면되는데
+          만약, 필수적으로 re-render되어야하는 부분에 prop가 없으면 console에서 오류가 생기고, 화면에서도 실행이 안될 수 있어
+          어떤 부분에서 오류가 생겼는지 확인이 가능함
+
+          <Btn title="Save Changes" fontSize={18} />
+          <Btn title="Continue" />
+          => 위에서 title.string.isRequired로 설정해주었기에 2가지의 Btn에는 필수적으로 title=""이 들어가야함
+             반대로 fontSize의 경우 필수설정을 안해줬기때문에 prop를 설정해도 되고 안해도 됨
+
+
+        * 추가로, prop가 없을때 기본값을 적용시켜주고 싶다고 한다면,
+            function Btn({ title, fontSize = 20 }) 해당 컴포넌트의 인자 부분에 javascript를 이용해서 기본값을 지정해줄 수 있다.
+
+    */
+
+</script>
+
+</html>
